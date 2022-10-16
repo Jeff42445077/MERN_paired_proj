@@ -1,5 +1,5 @@
 const express = require('express');
-// const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 // const users = require('./routes/api/users');
 // const profile = require('./routes/api/profile');
@@ -8,7 +8,7 @@ const express = require('express');
 const app = express();
 
 // // DB Config
-// const db = require('./config/keys').mongoURI;
+const db = require('./config/keys').mongoURI;
 
 // // Connect to MongoDB
 // mongoose
