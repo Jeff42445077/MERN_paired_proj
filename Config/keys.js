@@ -1,4 +1,4 @@
 module.exports = {
     mongoURI:
-    'mongodb://Jinzi1219:Jinzi1219@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]'
+    'mongodb+srv://Jinzi1219:Jinzi1219@devconnector.sus2w7p.mongodb.net/?retryWrites=true&w=majority'
 };
