@@ -3,10 +3,11 @@ const router = express.Router();
 const gravatar = require('gravatar');
 const bcrypt  = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const keys = require('../../Config/User');
+const keys = require('../../config/keys');
+const passport = require('passport');
 
 //Load user Model from User.js
-const User = require('../../Models/User')
+const User = require('../../models/User');
 
 //@route GET api/users/test
 //@desc Tests users route
@@ -20,7 +21,7 @@ router.post('/register',(req, res)=> {
     User.findOne({ email: req.body.email  })
     .then(user => {
         if(user){
-            return res.status(400).json({email: 'Emal already exists'});
+            return res.status(400).json({email: 'Email already exists'});
         }else{
             const avatar = gravatar.url(req.body.email,{
                 s: '200', //Size
@@ -54,7 +55,7 @@ router.post('/register',(req, res)=> {
 //@route GET api/users/login
 //@desc Login user/ Returning JWT Token
 //@access Public
-router.post('.login',(req,res)=>{
+router.post('/login',(req,res)=>{
     const email = req.body.email;
     const password = req.body.password;
     //Find user by email
@@ -72,16 +73,17 @@ router.post('.login',(req,res)=>{
 
             //User matched
             //created JWT payload
-            const payload = { id: user.id, name: user.name, avatar: user.avatar, }
+            const payload = { id: user.id, name: user.name, avatar: user.avatar, } // create jwt payload
 
             //Sign Token
             jwt.sign(
                 payload, 
                 keys.secretOrKey, 
-                { expiresIn: 3600 }, (err,token) => {
+                { expiresIn: 3600 }, 
+                (err,token) => {
                     res.json({
-                        sucess: true,
-                        token:'Bearer' + token
+                        success: true,
+                        token:'Bearer ' + token
                     });
             });
         }else{
